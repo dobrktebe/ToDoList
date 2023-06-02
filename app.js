@@ -89,12 +89,11 @@
 // change(1685525007737);
 // console.log(arr);
 
-
 // console.log(localStorage.getItem("array"))
-let array = JSON.parse(localStorage.getItem("array")) ?? [];   
+let array = JSON.parse(localStorage.getItem("array")) ?? [];
 
 let wrapper = document.querySelector(".wrapper");
-// let button = document.querySelector(".button");
+let button = document.querySelector(".button");
 let myList = document.querySelector(".myList");
 let input = document.querySelector(".input");
 let button_compleated = document.querySelector(".delete_but");
@@ -104,32 +103,28 @@ let form = document.querySelector(".form");
 form.addEventListener("submit", (evt) => {
   evt.preventDefault();
   // const myText = input.value;
-  array.push({
-    id: Date.now(),
-    text: input.value,
-    isDone: false,
-  });
+  if (input.value) {
+    array.push({
+      id: Date.now(),
+      text: input.value,
+      isDone: false,
+    });
+  } else { "" }
+  
   input.value = "";
   input.focus();
   wrapper.innerHTML = "";
   myForech();
-  
 });
-
-
-
-
-
-
 
 const drowToDo = (obj) => {
   const li = document.createElement("li");
   li.classList.add("myLi");
-  
+
   li.innerHTML = `<input class = "checkbox" type = "checkbox" >
     <span class = "mySpan">${obj.text}</span>
   <button class = "delAll_but">❌</button>`;
-  
+
   const chk = li.querySelector(".checkbox");
   const del = li.querySelector(".delAll_but");
 
@@ -137,9 +132,8 @@ const drowToDo = (obj) => {
 
   chk.addEventListener("change", () => changechk(obj.id));
   del.addEventListener("click", () => deletedTwo(obj.id));
-  
+
   return li;
-  
 };
 
 function changechk(id) {
@@ -161,8 +155,7 @@ function myForech() {
   wrapper.innerHTML = "";
   array.forEach((obj) => {
     wrapper.append(drowToDo(obj));
-  localStorage.setItem("array", JSON.stringify(array));
-    
+    localStorage.setItem("array", JSON.stringify(array));
   });
 }
 
@@ -183,4 +176,3 @@ myForech();
 
 button_compleated.addEventListener("click", deleted);
 button_deleteAll.addEventListener("click", clearAll);
-
