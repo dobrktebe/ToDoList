@@ -132,6 +132,9 @@ footer {
 }
 
 
-.checkbox{
-  font-size: 50%;
+.checkbox:checked ~ .mySpan{
+  text-decoration-line: line-through;
 }
+
+
+

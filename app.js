@@ -89,9 +89,12 @@
 // change(1685525007737);
 // console.log(arr);
 
-let array = [];
+
+// console.log(localStorage.getItem("array"))
+let array = JSON.parse(localStorage.getItem("array")) ?? [];   
+
 let wrapper = document.querySelector(".wrapper");
-let button = document.querySelector(".button");
+// let button = document.querySelector(".button");
 let myList = document.querySelector(".myList");
 let input = document.querySelector(".input");
 let button_compleated = document.querySelector(".delete_but");
@@ -108,43 +111,25 @@ form.addEventListener("submit", (evt) => {
   });
   input.value = "";
   input.focus();
-  console.log(array);
   wrapper.innerHTML = "";
   myForech();
-  localStorage.setItem("array.", JSON.stringify(array));
+  
 });
 
-// function createCards(array) {
-//   array.forEach((element) => {
-//     let parent = document.createElement("div");
-//     parent.classList.add(".wrapper");
 
-//     let inputCheck = document.createElement("input");
-//     inputCheck = element;
-//     inputCheck.classList.add(".checkbox");
 
-//     let myText = document.createElement("p");
-//     myText.innerText = element.array;
-//     myText.classList.add(".text");
 
-//     let myButton = document.createElement("button");
-//     myButton.innerText = element;
-//     myButton.classList.add(".redKrest");
 
-//     parent.append(inputCheck);
-//     parent.append(myText);
-//     parent.append(myButton);
-//     array.append(parent)
-//   });
-// }
-// console.log(createCards(myText));
+
 
 const drowToDo = (obj) => {
   const li = document.createElement("li");
   li.classList.add("myLi");
+  
   li.innerHTML = `<input class = "checkbox" type = "checkbox" >
     <span class = "mySpan">${obj.text}</span>
   <button class = "delAll_but">❌</button>`;
+  
   const chk = li.querySelector(".checkbox");
   const del = li.querySelector(".delAll_but");
 
@@ -152,12 +137,15 @@ const drowToDo = (obj) => {
 
   chk.addEventListener("change", () => changechk(obj.id));
   del.addEventListener("click", () => deletedTwo(obj.id));
+  
   return li;
+  
 };
 
 function changechk(id) {
   const todo = array.find((obj) => obj.id === id);
   todo.isDone = !todo.isDone;
+  myForech();
 }
 // change(1685525007737);
 // console.log(arr);
@@ -173,6 +161,8 @@ function myForech() {
   wrapper.innerHTML = "";
   array.forEach((obj) => {
     wrapper.append(drowToDo(obj));
+  localStorage.setItem("array", JSON.stringify(array));
+    
   });
 }
 
@@ -186,7 +176,11 @@ function deleted() {
 function clearAll() {
   array = [];
   wrapper.innerHTML = "";
+  myForech();
 }
+
+myForech();
 
 button_compleated.addEventListener("click", deleted);
 button_deleteAll.addEventListener("click", clearAll);
+
